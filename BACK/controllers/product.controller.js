@@ -1,5 +1,5 @@
 import { Product } from "../models/index.js";
-import { env } from "../config.js";
+// import { env } from "../config.js";
 
 const add = async (req , res ,next) => {
     try {
@@ -9,7 +9,7 @@ const add = async (req , res ,next) => {
         console.log(error);
         next(error);
     }
-}
+};
 
 const allProduct = async (req , res) =>{
     try{
@@ -19,16 +19,18 @@ const allProduct = async (req , res) =>{
         console.log(e)
         res.status(400).json("No product found!")
     }
-}
+};
 
+
+// Modifier pour que le seul l'Admin puisse exécuter ces actions 
 const deleteById = async (res , req , next) => {
     try{
         const delectedProduct = await Product.destroy({ where: { id: req.params.id } })
 
         if(!delectedProduct) return res.status(400).json('Product not found!')
     }catch(e){
-    console.log(e)
+    console.log(e);
     }
-}
+};
 
 export {add ,allProduct, deleteById}
