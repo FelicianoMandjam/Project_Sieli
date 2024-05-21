@@ -2,6 +2,9 @@ import { Sequelize } from "sequelize";
 // J'import les models
 import userModel from "../models/user.model.js";
 import productModel from "./product.model.js";
+import contactModel from "./contact.model.js";
+import categoryModel from "./category.model.js";
+// J'importe le env du dossier config
 import { env } from "../config.js";
 
 // Connecion a la BDD SQL
@@ -27,11 +30,13 @@ try {
 
 userModel(connection, Sequelize);
 productModel(connection, Sequelize);
+contactModel(connection, Sequelize);
+categoryModel(connection, Sequelize);
 
-const { User , Product } = connection.models;
+const { User, Product, Contact, Category } = connection.models;
 
 await connection.sync({ alter: true, force: false });
-console.log('Synchro Ok ')
+console.log("Synchro Ok ");
 
 // export default connection.models
-export {User , Product}
+export { User, Product, Contact, Category };

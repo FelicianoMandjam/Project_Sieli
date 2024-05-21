@@ -4,7 +4,10 @@ import dotenv from 'dotenv';   // DOTENV que me permet de récupérer tous qu'es
 import { env } from './config.js'
 import cookieParser from 'cookie-parser'
 import userRoutes from './routes/user.router.js'
+// Routes
 import productRoutes from './routes/product.router.js'
+import categoryRoutes from './routes/category.router.js'
+import contactRoutes from './routes/contact.router.js'
 import './models/index.js'
 
 dotenv.config();
@@ -19,11 +22,13 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
-app.use('/user' , userRoutes)
-app.use('/product' , productRoutes)
+app.use('/user' , userRoutes);
+app.use('/product' , productRoutes);
+app.use('/category' , categoryRoutes);
+app.use('/contact' , contactRoutes);
 
 
 app.listen(3001 , () => {
     console.log(`API ouverte au port 3001 lien est http;//localhost:${PORT}`);
-})
+});
 
