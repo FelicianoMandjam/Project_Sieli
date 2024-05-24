@@ -23,7 +23,7 @@ export default (connection, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
+      
     },
     {
       timestamp: true,

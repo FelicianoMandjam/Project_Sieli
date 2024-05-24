@@ -31,10 +31,9 @@ const login = async (req, res) => {
       // Le 2 arg = clé secrète, qui est utilisée pour signer le token.
       // On le récupére à partir des variables d'environnement
 
-      env.token,
+      env.TOKEN,
 
       // Le 3 arg = un objet qie contient les oprions du token , dans ce cas je définis la durée de 24 h du token
-
       { expiresIn: "24h" }
     );
 
@@ -43,8 +42,10 @@ const login = async (req, res) => {
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
       .json(user);
+
+      console.log("Connexion reussie")
   } catch (e) {
-    console.log(e);
+    res.status(400).json(e.message)
   }
 };
 
@@ -73,63 +74,61 @@ const register = async (req, res, next) => {
 const getAll = async (req, res) => {
   try {
     // recherche l'user dnas la base de données par son email
-    const users = await User.findAll()
-      res.status(200).json(users);
-
+    const users = await User.findAll();
+    res.status(200).json(users);
+    console.table(users)
   } catch (error) {
     console.log(error);
-    res.status(400).json("Not User Found .")
+    res.status(400).json("Not User Found .");
   }
 };
 
 const getById = async (req, res) => {
   try {
-      // Récupère l'ID de l'utilisateur depuis les paramètres de la requête
-      const id = req.params.id;
-      // Utilise la méthode findByPk de Sequelize pour obtenir l'utilisateur avec l'ID spécifié
-      const user = await User.findByPk(id);
-      // Répond avec le statut 200 (OK) et l'utilisateur
-      res.status(200).json(user);
+    // Récupère l'ID de l'utilisateur depuis les paramètres de la requête
+    const id = req.params.id;
+    // Utilise la méthode findByPk de Sequelize pour obtenir l'utilisateur avec l'ID spécifié
+    const user = await User.findByPk(id);
+    // Répond avec le statut 200 (OK) et l'utilisateur
+    res.status(200).json(user);
   } catch (error) {
-      // Log l'erreur si quelque chose se passe mal
-      console.log(error);
+    // Log l'erreur si quelque chose se passe mal
+    console.log(error);
   }
-}
+};
 
 const updateById = async (req, res) => {
   try {
-      // Je récupère l'utilisateur avec son id (findByPk)
-      const user = await User.findByPk(req.params.id);
+    // Je récupère l'utilisateur avec son id (findByPk)
+    const user = await User.findByPk(req.params.id);
 
-      // Puis je met à jour cet utilisateur avec update
-      await user.update(
-          req.body
-      );
-      // Si l'utilisateur n'est pas trouvé, renvoie le statut 404 (Non trouvé) et un message d'erreur
-      if (!user) return res.status(404).json("User not found !");
-      // Si tout se passe bien, renvoie le statut 200 (OK), un message de confirmation et l'utilisateur mis à jour
-      res.status(200).json({
-          message: "user updated",
-          user,
-      });
+    // Puis je met à jour cet utilisateur avec update
+    await user.update(req.body);
+    // Si l'utilisateur n'est pas trouvé, renvoie le statut 404 (Non trouvé) et un message d'erreur
+    if (!user) return res.status(404).json("User not found !");
+    // Si tout se passe bien, renvoie le statut 200 (OK), un message de confirmation et l'utilisateur mis à jour
+    res.status(200).json({
+      message: "user updated",
+      user,
+    });
   } catch (error) {
-      // Log l'erreur si quelque chose se passe mal
-      console.log(error);
+    // Log l'erreur si quelque chose se passe mal
+    console.log(error);
   }
-}
+};
 
 const deleteById = async (req, res) => {
   try {
-      // Utilise la méthode destroy de Serquelize pour supprimer l'utilisateur avec l'ID spécifié
-      const userDeleted = await User.destroy({ where: { id: req.params.id } });
-      // Si l'utilisateur n'est pas trouvé, renvoie le statut 404 (Non trouvé) et un message d'erreur
-      if (!userDeleted) return res.status(404).json("User not found !");
-      // Si tout se passe bien, renvoie le statut 200 (OK) et un message de confirmation
-      res.status(200).json({ message: "User deleted" });
+    // Utilise la méthode destroy de Serquelize pour supprimer l'utilisateur avec l'ID spécifié
+    const userDeleted = await User.destroy({ where: { id: req.params.id } });
+    // Si l'utilisateur n'est pas trouvé, renvoie le statut 404 (Non trouvé) et un message d'erreur
+    if (!userDeleted) return res.status(404).json("User not found !");
+    // Si tout se passe bien, renvoie le statut 200 (OK) et un message de confirmation
+    res.status(200).json({ message: "User deleted" });
   } catch (error) {
-      // Log l'erreur si quelque chose se passe mal
-      console.log(error);
+    // Log l'erreur si quelque chose se passe mal
+    console.log(error);
   }
-}
+};
 
-export { login, register, getAll , deleteById , updateById , getById };
+export { login, register, getAll, deleteById, updateById, getById };
