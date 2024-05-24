@@ -3,8 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';   // DOTENV que me permet de récupérer tous qu'est dans mon fichier .env
 import { env } from './config.js'
 import cookieParser from 'cookie-parser'
-import userRoutes from './routes/user.router.js'
 // Routes
+import userRoutes from './routes/user.router.js'
 import productRoutes from './routes/product.router.js'
 import categoryRoutes from './routes/category.router.js'
 import contactRoutes from './routes/contact.router.js'

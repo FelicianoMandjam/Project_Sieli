@@ -35,7 +35,7 @@ categoryModel(connection, Sequelize);
 
 const { User, Product, Contact, Category } = connection.models;
 
-await connection.sync({ alter: true, force: false });
+await connection.sync({ alter: true, force: false }); 
 console.log("Synchro Ok ");
 
 // export default connection.models
