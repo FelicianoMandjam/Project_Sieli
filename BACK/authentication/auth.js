@@ -23,6 +23,6 @@ export const verifieToken = (req, res, next) => {
 		// dans l'objet req
     req.user = user
 
-    next();
-  })
+  next();
+    })
 }
