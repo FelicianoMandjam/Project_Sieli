@@ -12,15 +12,15 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
-            dir ('./BACK'){
-                steps {
+            steps {
+                dir ('./BACK'){
                     sh 'npm install'
                 }
             }
         }
         stage('Run Test') {
-            dir ('./BACK'){
-                steps {
+            steps {
+                dir ('./BACK'){
                     sh 'npm run test' 
                 }
             }
