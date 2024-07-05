@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/index.js";
-import { env } from "../config.js";
+import { env } from "../config/env.js";
 import bcrypt from "bcrypt";
 
 const login = async (req, res) => {
@@ -43,9 +43,9 @@ const login = async (req, res) => {
       .status(200)
       .json(user);
 
-      console.log("Connexion reussie")
+    console.log("Connexion reussie");
   } catch (e) {
-    res.status(400).json(e.message)
+    res.status(400).json(e.message);
   }
 };
 
@@ -76,7 +76,7 @@ const getAll = async (req, res) => {
     // recherche l'user dnas la base de données par son email
     const users = await User.findAll();
     res.status(200).json(users);
-    console.table(users)
+    console.table(users);
   } catch (error) {
     console.log(error);
     res.status(400).json("Not User Found .");

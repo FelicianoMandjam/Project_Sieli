@@ -1,25 +1,12 @@
 import { Sequelize } from "sequelize";
-// J'import les models
+import connection from "../config/db.js";
+
 import userModel from "../models/user.model.js";
 import productModel from "./product.model.js";
 import contactModel from "./contact.model.js";
 import categoryModel from "./category.model.js";
-// J'importe le env du dossier config
-import { env } from "../config.js";
 
-// Connecion a la BDD SQL
-const connection = new Sequelize(
-  env.DATABASE_NAME, // Nom de la DB
-  env.DATABASE_USER, // Identifiant DB
-  env.DATABASE_PASSWORD, // Password DB
-  {
-    host: env.DATABASE_URI, // URL de mySQL
-    dialect: env.DATABASE_TYPE,
-    dialectOptions: {
-      socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
-    },
-  }
-);
+
 
 try {
   await connection.authenticate();
@@ -35,7 +22,13 @@ categoryModel(connection, Sequelize);
 
 const { User, Product, Contact, Category } = connection.models;
 
-await connection.sync({ alter: true, force: false }); 
+
+// Les relations
+
+
+
+
+await connection.sync({ alter: false, force: false });
 console.log("Synchro Ok ");
 
 // export default connection.models
